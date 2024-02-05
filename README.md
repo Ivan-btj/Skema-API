@@ -26,12 +26,11 @@ User-data object
 }
 ```
 
-
 ## 1. Authentication
 
 ### POST /v1/auth/register
 ----
-  Creates a new User and returns the new object.
+  Creates a new User and returns the new object. Only admin that can register user
 * **URL Params**  
   None
 * **Headers**  
@@ -50,6 +49,7 @@ User-data object
 
 ### GET /v1/auth/login
 ----
+ Login User and returns the refresh key. Only admin that can register user
   Login to CMS
 * **URL Params**  
   None
@@ -86,7 +86,7 @@ User-data object
   None
 * **Headers**  
   Content-Type: application/json
-  Authorization: Bearer `<OAuth Token>`  
+  Authorization:  `<Bearer Token (JWT)>`
 * **Data Params**  
 ```
   {
@@ -115,7 +115,7 @@ User-data object
   None
 * **Headers**  
   Content-Type: application/json  
-  Authorization: Bearer `<OAuth Token>`
+  Authorization:  `<Bearer Token (JWT)>`
 * **Success Response:**  
 * **Code:** 200  
   **Content:**  
@@ -142,7 +142,7 @@ User-data object
   None
 * **Headers**  
   Content-Type: application/json  
-  Authorization: Bearer `<OAuth Token>`
+  Authorization:  `<Bearer Token (JWT)>`
 * **Success Response:** 
 * **Code:** 200  
   **Content:**  `{ <user-data_object> }` 
@@ -160,7 +160,7 @@ User-data object
   *Required:* `id=[integer]`
 * **Headers**  
   Content-Type: application/json
-  Authorization: Bearer `<OAuth Token>`  
+  Authorization:  `<Bearer Token (JWT)>`
 * **Data Params**  
 	```
 	{
@@ -188,7 +188,7 @@ User-data object
   *Required:* `id=[integer]`
 * **Headers**  
   Content-Type: application/json
-  Authorization: Bearer `<OAuth Token>`  
+  Authorization:  `<Bearer Token (JWT)>`  
 * **Data Params**  
 	```
 	{

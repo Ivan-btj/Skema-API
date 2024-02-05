@@ -1,12 +1,16 @@
+## 1. Authentication
+
 * User object
 ```
 {
   id: integer
+  name: string
   username: string
   email: string
   password: string
   role: string
   created_at: datetime()
+  created_by: datetime()
   updated_at: datetime()
   updated_by: string
   deactivated_at: datetime()
@@ -16,17 +20,17 @@
 User-data object
 ```
 {
+  id: integer
+  name: string
   username: string
-  email: string
   created_at: datetime()
+  created_by: datetime()
   updated_at: datetime()
   updated_by: string
   deactivated_at: datetime()
   deactivated_by: string
 }
 ```
-
-## 1. Authentication
 
 ### POST /v1/auth/register
 ----
@@ -68,11 +72,17 @@ User-data object
   **Content:**  
 ```
 {
-  ubah dlu: [
-           {<user_object>},
-           {<user_object>},
-           {<user_object>}
-         ]
+	  id: integer
+	  name: string
+	  username: string
+	  created_at: datetime()
+	  created_by: datetime()
+	  updated_at: datetime()
+	  updated_by: string
+	  deactivated_at: datetime()
+	  deactivated_by: string
+	  access_token": string
+	  refresh_token": string
 }
 ```
 * **Error Response:**  
@@ -172,6 +182,8 @@ User-data object
 * **Code:** 200  
   **Content:**  `{ <user-data_object> }` 
 * **Error Response:**  
+  * **Code:** 404  
+  **Content:** `{ error : "User doesn't exist" }`  
   * **Code:** 409 
   **Content:** `{ error : "username had been used" }`  
   OR  
@@ -202,6 +214,45 @@ User-data object
 * **Error Response:**  
   * **Code:** 404  
   **Content:** `{ error : "User doesn't exist" }`  
+  OR  
+  * **Code:** 401  
+  **Content:** `{ error : "You are unauthorized to make this request." }`
+
+## 3. Images
+
+### GET /v1/user/{image_name}
+
+  Returns image base on image name in the system.
+
+* **URL Params**  
+  *Required:* `image_id=[integer]`
+* **Data Params**  
+  None
+* **Headers**  
+  Content-Type: application/json  
+* **Success Response:** 
+* **Code:** 200  
+  **Content:**  `{ <user-data_object> }` 
+* **Error Response:**  
+  * **Code:** 404  
+  **Content:** `{ error : "Image not found" }`  
+
+### POST /v1/user/{image_name}
+----
+  Creates a new User and returns the new object.
+* **URL Params**  
+  *Required:* `id=[integer]`
+* **Headers**  
+  Content-Type: application/json
+  Authorization:  `<Bearer Token (JWT)>`
+* **Data Params**  
+  None
+* **Success Response:**  
+* **Code:** 200  
+  **Content:**  `{ <user-data_object> }` 
+* **Error Response:**  
+  * **Code:** 404  
+  **Content:** `{ error : "Image not found" }`  
   OR  
   * **Code:** 401  
   **Content:** `{ error : "You are unauthorized to make this request." }`

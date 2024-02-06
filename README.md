@@ -309,12 +309,12 @@ image object:
 image: (.jpg or.png)
 
 
-### GET /v1/images/
+### GET /v1/images/{image_folder}/
 
   Returns image base on image name in the system.
 
 * **URL Params**  
-	None
+	*Required:* `image_folder=[string]`
 * **Data Params**  
   None
 * **Headers**  
@@ -337,11 +337,12 @@ image: (.jpg or.png)
   * **Code:** 404  
   **Content:** `{ message : "Image not found" }`  
 
-### GET /v1/images/{image_name}
+### GET /v1/images/{image_folder}/{image_name}
 
   Returns image base on image name in the system.
 
-* **URL Params**  
+* **URL Params**
+   *Required:* `image_folder=[string]`  
    *Required:* `image_name=[string]`
 * **Data Params**  
   None
@@ -354,11 +355,12 @@ image: (.jpg or.png)
   * **Code:** 404  
   **Content:** `{ message : "Image not found" }`  
 
-### POST /v1/images/{image_name}
+### POST /v1/images/{image_folder}/{image_name}
 ----
   Creates a new User and returns the new object.
 * **URL Params**  
-  *Required:* `image_name=[integer]`
+   *Required:* `image_folder=[string]`  
+   *Required:* `image_name=[string]`
 * **Headers**  
   Content-Type: file/image 
   Authorization:  `<Bearer Token (JWT)>`
@@ -371,11 +373,12 @@ image: (.jpg or.png)
   * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
-### PUT /v1/images/{image_name}
+### PUT /v1/images/{image_folder}/{image_name}
 ----
   Creates a new User and returns the new object.
 * **URL Params**  
-  *Required:* `image_name=[integer]`
+   *Required:* `image_folder=[string]`  
+   *Required:* `image_name=[string]`
 * **Headers**  
   Content-Type: file/image
   Authorization:  `<Bearer Token (JWT)>`
@@ -391,11 +394,12 @@ image: (.jpg or.png)
   * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
-### DELETE /v1/images/{image_name}
+### DELETE /v1/images/{image_folder}/{image_name}
 ----
   Creates a new User and returns the new object.
 * **URL Params**  
-  *Required:* `image_name=[integer]`
+   *Required:* `image_folder=[string]`  
+   *Required:* `image_name=[string]`
 * **Headers**  
   Content-Type: file/image
   Authorization:  `<Bearer Token (JWT)>`

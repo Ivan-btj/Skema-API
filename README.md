@@ -1,3 +1,4 @@
+
 ## 1. Authentication
 
 * User object
@@ -87,7 +88,7 @@ User-data object
 ```
 * **Error Response:**  
   * **Code:** 404  
-  **Content:** `{ error : "Username or password error" }`  
+  **Content:** `{ message : "Username or password error" }`  
 
 ### POST /v1/auth/change-password
 ----
@@ -109,10 +110,10 @@ User-data object
 
 * **Error Response:**  
   * **Code:** 404  
-  **Content:** `{ error : "Password error" }`  
+  **Content:** `{ message : "Password error" }`  
   OR  
   * **Code:** 401  
-  **Content:** `{ error : "You are unauthorized to make this request." }`
+  **Content:** `{ message : "You are unauthorized to make this request." }`
 
 ## 2. User
 
@@ -131,16 +132,17 @@ User-data object
   **Content:**  
 	```
 	{
-	  users: [
-	           {<user-data_object>},
-	           {<user-data_object>},
-	           {<user-data_object>}
-	         ]
+	  users: 
+	  [
+          {<user-data_object>},
+          {<user-data_object>},
+          {<user-data_object>}
+	  ]
 	}
 	```
 * **Error Response:**  
   * **Code:** 401  
-  **Content:** `{ error : "You are unauthorized to make this request." }`
+  **Content:** `{ message : "You are unauthorized to make this request." }`
 
 ### GET /v1/user/{user_id}
 
@@ -158,10 +160,10 @@ User-data object
   **Content:**  `{ <user-data_object> }` 
 * **Error Response:**  
   * **Code:** 404  
-  **Content:** `{ error : "User doesn't exist" }`  
+  **Content:** `{ message : "User doesn't exist" }`  
   OR  
   * **Code:** 401  
-  **Content:** `{ error : "You are unauthorized to make this request." }`
+  **Content:** `{ message : "You are unauthorized to make this request." }`
 
 ### POST /v1/user/{user_id}
 ----
@@ -183,15 +185,15 @@ User-data object
   **Content:**  `{ <user-data_object> }` 
 * **Error Response:**  
   * **Code:** 404  
-  **Content:** `{ error : "User doesn't exist" }`  
+  **Content:** `{ message : "User doesn't exist" }`  
   * **Code:** 409 
-  **Content:** `{ error : "username had been used" }`  
+  **Content:** `{ message : "username had been used" }`  
   OR  
    * **Code:** 409  
-  **Content:** `{ error : "email had been used" }`  
+  **Content:** `{ message : "email had been used" }`  
   OR  
   * **Code:** 401  
-  **Content:** `{ error : "You are unauthorized to make this request." }`
+  **Content:** `{ message : "You are unauthorized to make this request." }`
 
 ### DELETE /v1/user/{user_id}
 ----
@@ -213,14 +215,20 @@ User-data object
   **Content:**  `{ <user-data_object> }` 
 * **Error Response:**  
   * **Code:** 404  
-  **Content:** `{ error : "User doesn't exist" }`  
+  **Content:** `{ message : "User doesn't exist" }`  
   OR  
   * **Code:** 401  
-  **Content:** `{ error : "You are unauthorized to make this request." }`
+  **Content:** `{ message : "You are unauthorized to make this request." }`
 
-## 3. Images
+## 3. Subscription
 
-### GET /v1/user/{image_name}
+subscription object:
+{
+	image (.jpg or.png)
+}
+
+
+### GET /v1/subscription/
 
   Returns image base on image name in the system.
 
@@ -229,30 +237,176 @@ User-data object
 * **Data Params**  
   None
 * **Headers**  
-  Content-Type: application/json  
+  Content-Type: file/image 
 * **Success Response:** 
 * **Code:** 200  
-  **Content:**  `{ <user-data_object> }` 
+  **Content:**  
+
+	```
+	{
+		belum ada
+	}
+	```
 * **Error Response:**  
   * **Code:** 404  
-  **Content:** `{ error : "Image not found" }`  
+  **Content:** `{ message : "Subscription not found" }`  
+   * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
 
-### POST /v1/user/{image_name}
+### GET /v1/subscription/{subscription_id}
+
+  Returns image base on image name in the system.
+
+* **URL Params**  
+  *Required:* `subscription_id=[integer]`
+* **Data Params**  
+  None
+* **Headers**  
+  Content-Type: file/image 
+* **Success Response:** 
+* **Code:** 200  
+  **Content:**
+	```
+	{
+		belum ada
+	}
+	```
+
+* **Error Response:**  
+  * **Code:** 404  
+  **Content:** `{ message : "Subscription not found" }` 
+   * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
+### POST /v1/subscription/{subscription_id}
 ----
   Creates a new User and returns the new object.
 * **URL Params**  
-  *Required:* `id=[integer]`
+  *Required:* `subscription_id=[integer]`
 * **Headers**  
-  Content-Type: application/json
+  Content-Type: file/image 
   Authorization:  `<Bearer Token (JWT)>`
 * **Data Params**  
-  None
+`{ <image_object> }`
 * **Success Response:**  
 * **Code:** 200  
-  **Content:**  `{ <user-data_object> }` 
+  **Content:**  
+  
+	```
+	{
+		belum ada
+	}
+	```
+* **Error Response:**  
+  * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
+
+## 4. Images
+
+image object: 
+
+image: (.jpg or.png)
+
+
+### GET /v1/images/
+
+  Returns image base on image name in the system.
+
+* **URL Params**  
+	None
+* **Data Params**  
+  None
+* **Headers**  
+  Content-Type: file/image 
+* **Success Response:** 
+* **Code:** 200  
+  **Content:**  
+
+	```
+	{
+	  images 
+	  [
+		  { <image_object> },
+		  { <image_object> },
+		  { <image_object> }
+	  ]
+	}
+	```
 * **Error Response:**  
   * **Code:** 404  
-  **Content:** `{ error : "Image not found" }`  
+  **Content:** `{ message : "Image not found" }`  
+
+### GET /v1/images/{image_name}
+
+  Returns image base on image name in the system.
+
+* **URL Params**  
+   *Required:* `image_name=[string]`
+* **Data Params**  
+  None
+* **Headers**  
+  Content-Type: file/image 
+* **Success Response:** 
+* **Code:** 200  
+  **Content:**  `{ <image_object> }` 
+* **Error Response:**  
+  * **Code:** 404  
+  **Content:** `{ message : "Image not found" }`  
+
+### POST /v1/images/{image_name}
+----
+  Creates a new User and returns the new object.
+* **URL Params**  
+  *Required:* `image_name=[integer]`
+* **Headers**  
+  Content-Type: file/image 
+  Authorization:  `<Bearer Token (JWT)>`
+* **Data Params**  
+`{ <image_object> }`
+* **Success Response:**  
+* **Code:** 200  
+  **Content:**  `{ <image_object> }`  
+* **Error Response:**  
+  * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
+### PUT /v1/images/{image_name}
+----
+  Creates a new User and returns the new object.
+* **URL Params**  
+  *Required:* `image_name=[integer]`
+* **Headers**  
+  Content-Type: file/image
+  Authorization:  `<Bearer Token (JWT)>`
+* **Data Params**  
+`{ <image_object> }`
+* **Success Response:**  
+* **Code:** 200  
+  **Content:**  `{ <image_object> }`  
+* **Error Response:**  
+  * **Code:** 404  
+  **Content:** `{ message : "Image not found" }`  
   OR  
   * **Code:** 401  
-  **Content:** `{ error : "You are unauthorized to make this request." }`
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
+### DELETE /v1/images/{image_name}
+----
+  Creates a new User and returns the new object.
+* **URL Params**  
+  *Required:* `image_name=[integer]`
+* **Headers**  
+  Content-Type: file/image
+  Authorization:  `<Bearer Token (JWT)>`
+* **Data Params**  
+	None
+* **Success Response:**  
+* **Code:** 200  
+  **Content:**  `{ <image_object> }`  
+* **Error Response:**  
+  * **Code:** 404  
+  **Content:** `{ message : "Image not found" }`  
+  OR  
+  * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`

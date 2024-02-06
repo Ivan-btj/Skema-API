@@ -28,7 +28,6 @@ User-data object
   deactivated_by: string
 }
 ```
-
 ### POST /v1/auth/register
 ----
   Creates a new User and returns the new object.
@@ -42,6 +41,28 @@ User-data object
     username: string,
     email: string
     password: string
+  }
+```
+* **Success Response:**  
+* **Code:** 200  
+  **Content:**  `{ message : "Success create users" }`
+  `{ <user_object> }` 
+
+### POST /v1/auth/roles
+----
+  Creates a new roles and returns the new object.
+* **URL Params**  
+  None
+* **Headers**  
+  Content-Type: application/json  
+* **Data Params**  
+```
+  {
+	  ....
+    access_to_POST/v1/users/
+    access_to_GET/v1/users/{user_id}
+    access_to_PUT/v1/users/{user_id}
+    ....
   }
 ```
 * **Success Response:**  
@@ -90,7 +111,7 @@ User-data object
 
 ### POST /v1/auth/change-password/{user_id}
 ----
-  Change users password.
+  Change users password base on id.
   
 * **URL Params**  
   *Required:* `user_id=[integer]`
@@ -116,7 +137,7 @@ User-data object
 
 ## 2. User
 
-### GET /v1/user
+### GET /v1/users
 ----
   Returns all users in the system.
 * **URL Params**  
@@ -132,7 +153,7 @@ User-data object
   `{ message : "Success update user" }` 
 	```
 	{
-	  users: 
+	  data: 
 	  [
           {<user-data_object>},
           {<user-data_object>},
@@ -144,9 +165,43 @@ User-data object
   * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
-### GET /v1/user/{user_id}
+### GET /v1/users?page_number={integer}&item_per_page={integer}&filter_by_id={boolean}
+----
+  Returns all users in the system with pagination.
+* **URL Params**  
+  None
+* **Data Params**  
+  Query Parameter: 
+	  page_number: `<page_number>` 
+	  item_per_page: `<page_size>`
+	  filter_by_id: `<filter_by_id>`
+* **Headers**  
+  Content-Type: application/json  
+  Authorization:  `<Bearer Token (JWT)>`
+* **Success Response:**  
+* **Code:** 200  
+  **Content:**  
+  `{ message : "Success update user" }` 
+	```
+	{
+	  page_number: integer 
+	  item_per_page: integer
+	  filter_by_id: boolean
+	  data: 
+	  [
+          {<user-data_object>},
+          {<user-data_object>},
+          {<user-data_object>}
+	  ]
+	}
+	```
+* **Error Response:**  
+  * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
 
-  Returns user base on user id in the system.
+### GET /v1/users/{user_id}
+
+  Returns user base on id.
 
 * **URL Params**  
   *Required:* `user_id=[integer]`
@@ -166,9 +221,9 @@ User-data object
   * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
-### PUT /v1/user/{user_id}
+### PUT /v1/users/{user_id}
 ----
-  Creates a new User and returns the new object.
+  Update one user base on id.
 * **URL Params**  
   *Required:* `user_id=[integer]`
 * **Headers**  
@@ -197,9 +252,9 @@ User-data object
   * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
-### DELETE /v1/user/{user_id}
+### DELETE /v1/users/{user_id}
 ----
-  Delete User
+  Delete user base on id.
 * **URL Params**  
   *Required:* `user_id=[integer]`
 * **Headers**  
@@ -243,7 +298,51 @@ subscriber object
 * **Success Response:** 
 * **Code:** 200  
   **Content:**  `{ message : "Success get subscriber" }` 
-  `{ <subscriber_object> }` 
+	```
+	{
+	  data: 
+	  [
+          {<subscriber_object>},
+          {<subscriber_object>},
+          {<subscriber_object>}
+	  ]
+	}
+	```
+* **Error Response:**  
+  * **Code:** 404  
+  **Content:** `{ message : "Subscriber not found" }`  
+   * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
+### GET /v1/subscribers/?page_number={integer}&item_per_page={integer}&filter_by_id={boolean}
+
+  Returns all subscriber with pagination.
+
+* **URL Params**  
+	None
+* **Data Params**  
+  Query Parameter: 
+	  page_number: `<page_number>` 
+	  item_per_page: `<page_size>`
+	  filter_by_id: `<filter_by_id>`
+* **Headers**  
+  Content-Type: application/json 
+* **Success Response:** 
+* **Code:** 200  
+  **Content:**  `{ message : "Success get subscriber" }` 
+	```
+	{
+	  page_number: integer 
+	  item_per_page: integer
+	  filter_by_id: boolean
+	  data: 
+	  [
+          {<subscriber_object>},
+          {<subscriber_object>},
+          {<subscriber_object>}
+	  ]
+	}
+	```
 * **Error Response:**  
   * **Code:** 404  
   **Content:** `{ message : "Subscriber not found" }`  
@@ -291,7 +390,7 @@ subscriber object
 
 ### DELETE /v1/subcribers/{subscriber_id}
 ----
-  Delete subscriber
+  Delete subscriber base on id.
 * **URL Params**  
   *Required:* `subscriber_id=[integer]`
 * **Headers**  
@@ -333,11 +432,44 @@ image: (.jpg or.png)
 `{ message : "Success add image" }`  
 	```
 	{
-	  images 
+	  data: 
 	  [
 		  { <image_object> },
 		  { <image_object> },
 		  { <image_object> }
+	  ]
+	}
+	```
+* **Error Response:**  
+  * **Code:** 404  
+  **Content:** `{ message : "Image not found" }`  
+
+### GET /v1/images/{image_folder}?page_number={integer}&item_per_page={integer}
+
+  Returns all image in the folder.
+
+* **URL Params**  
+	*Required:* `image_folder=[string]`
+* **Data Params**  
+  Query Parameter: 
+	  page_number: `<page_number>` 
+	  item_per_page: `<page_size>`
+* **Headers**  
+  Content-Type: file/image 
+* **Success Response:** 
+* **Code:** 200  
+  **Content:**  
+`{ message : "Success add image" }`  
+	```
+	{
+	  page_number: integer 
+	  item_per_page: integer
+	  filter_by_id: boolean
+	  data: 
+	  [
+          {<image_object>},
+          {<image_object>},
+          {<image_object>}
 	  ]
 	}
 	```
@@ -366,7 +498,7 @@ image: (.jpg or.png)
 
 ### POST /v1/images/{image_folder}/{image_name}
 ----
-  Creates a new User and returns the new object.
+  Creates a new image.
 * **URL Params**  
    *Required:* `image_folder=[string]`  
    *Required:* `image_name=[string]`
@@ -385,7 +517,7 @@ image: (.jpg or.png)
 
 ### PUT /v1/images/{image_folder}/{image_name}
 ----
-  Creates a new User and returns the new object.
+  Update image.
 * **URL Params**  
    *Required:* `image_folder=[string]`  
    *Required:* `image_name=[string]`
@@ -407,7 +539,7 @@ image: (.jpg or.png)
 
 ### DELETE /v1/images/{image_folder}/{image_name}
 ----
-  Creates a new User and returns the new object.
+  Delete Image
 * **URL Params**  
    *Required:* `image_folder=[string]`  
    *Required:* `image_name=[string]`
@@ -419,7 +551,6 @@ image: (.jpg or.png)
 * **Success Response:**  
 * **Code:** 200  
   **Content:**  `{ message : "Success delete image" }`  
-  `{ <image_object> }`  
 * **Error Response:**  
   * **Code:** 404  
   **Content:** `{ message : "Image not found" }`  
@@ -442,7 +573,7 @@ contact_us object
 
 ### GET /v1/contact_us/
 
-  Returns image base on image name in the system.
+  Returns contact request.
 
 * **URL Params**  
 	None
@@ -453,14 +584,53 @@ contact_us object
 * **Success Response:** 
 * **Code:** 200  
   **Content:**  `{ message : "Success get contact request content" }`  
-  `{ <contact_us_object> }`    
+	```
+	{
+	  data: 
+	  [
+          {<contact_us_object>},
+          {<contact_us_object>},
+          {<contact_us_object>}
+	  ]
+	}
+	```     
 * **Error Response:**  
    * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
+### GET /v1/contact_us?page_number={integer}&item_per_page={integer}
+
+  Returns contact request with pagination.
+
+* **URL Params**  
+	None
+* **Data Params**  
+  None
+* **Headers**  
+  Content-Type: application/json
+* **Success Response:** 
+* **Code:** 200  
+  **Content:**  `{ message : "Success get contact request content" }`  
+	```
+	{
+	  page_number: integer 
+	  item_per_page: integer
+	  data: 
+	  [
+          {<contact_us_object>},
+          {<contact_us_object>},
+          {<contact_us_object>}
+	  ]
+	}
+	```  
+* **Error Response:**  
+   * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
+
 ### GET /v1/contact_us/{contact_us_id}
 
-  Returns image base on image name in the system.
+  Returns contact request base on id
 
 * **URL Params**  
   *Required:* `contact_us_id=[integer]`
@@ -479,11 +649,11 @@ contact_us object
    * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
-### POST /v1/contact_us/{contact_us_id}
+### POST /v1/contact_us/
 ----
-  Creates a new User and returns the new object.
+  Create contact request
 * **URL Params**  
-  *Required:* `contact_us_id=[integer]`
+	None
 * **Headers**  
   Content-Type: application/json
   Authorization:  `<Bearer Token (JWT)>`  
@@ -495,6 +665,27 @@ contact_us object
   `{ <contact_us_object> }`  
 * **Error Response:**  
   * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
+### Delete /v1/contact_us/{contact_us_id}
+
+  Delete contact request base on id
+
+* **URL Params**  
+  *Required:* `contact_us_id=[integer]`
+* **Data Params**  
+  None
+* **Headers**  
+  Content-Type: application/json
+* **Success Response:** 
+* **Code:** 200  
+  **Content:**  `{ message : "Success delete contact request content" }`  
+  `{ <contact_us_object> }`    
+* **Error Response:**  
+  * **Code:** 404  
+  **Content:** `{ message : "Contact request not found" }` 
+  OR
+   * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
 ## 6. Blogs
@@ -518,7 +709,7 @@ blog object
 
 ### GET /v1/blogs/
 
-  Returns image base on image name in the system.
+  Returns all blogs
 
 * **URL Params**  
 	None
@@ -534,9 +725,43 @@ blog object
    * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
-### GET /v1/blogs/{blogs_id}
+### GET /v1/blogs?page_number={integer}&item_per_page={integer}&filter_by_id={boolean}
 
   Returns image base on image name in the system.
+
+* **URL Params**  
+	None
+* **Data Params**  
+  Query Parameter: 
+	  page_number: `<page_number>` 
+	  item_per_page: `<page_size>`
+	  filter_by_id: `<filter_by_id>`
+* **Headers**  
+  Content-Type: file/image 
+* **Success Response:** 
+* **Code:** 200  
+  **Content:**  `{ message : "Success get blog" }`
+	```
+	{
+	  page_number: integer 
+	  item_per_page: integer
+	  filter_by_id: boolean
+	  users: 
+	  [
+          {<blog_object>},
+          {<blog_object>},
+          {<blog_object>}
+	  ]
+	}
+	```
+* **Error Response:**  
+   * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
+
+### GET /v1/blogs/{blogs_id}
+
+  Returns blog base on blog name.
 
 * **URL Params**  
   *Required:* `blog_id=[integer]`
@@ -555,11 +780,11 @@ blog object
    * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
-### POST /v1/blogs/{blog_id}
+### POST /v1/blogs/
 ----
-  Creates a new User and returns the new object.
+  Create blog content.
 * **URL Params**  
-  *Required:* `blog_id=[integer]`
+None
 * **Headers**  
   Content-Type: application/json
   Authorization:  `<Bearer Token (JWT)>`  
@@ -575,7 +800,8 @@ blog object
 
 ### PUT /v1/blogs/{blog_id}
 ----
-  Creates a new User and returns the new object.
+Update blog content base on blog id
+ 
 * **URL Params**  
   *Required:* `blog_id=[integer]`
 * **Headers**  
@@ -600,7 +826,8 @@ blog object
 
 ### DELETE /v1/blogs/{blog_id}
 ----
-  Creates a new User and returns the new object.
+Delete blog content base on blog id
+
 * **URL Params**  
   *Required:* `blog_id=[integer]`
 * **Headers**  
@@ -653,6 +880,25 @@ case_study object
    * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
+
+### GET /v1/case_studies?page_number={integer}&item_per_page={integer}&filter_by_id={boolean}
+
+  Returns image base on image name in the system.
+
+* **URL Params**  
+	None
+* **Data Params**  
+  None
+* **Headers**  
+  Content-Type: file/image 
+* **Success Response:** 
+* **Code:** 200  
+  **Content:**  `{ message : "Success get case study" }`
+    `{ <case_study_object> }`    
+* **Error Response:**  
+   * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
 ### GET /v1/case_studies/{case_study_id}
 
   Returns image base on image name in the system.
@@ -666,7 +912,19 @@ case_study object
 * **Success Response:** 
 * **Code:** 200  
   **Content:**   `{ message : "Success get case study" }`
-    `{ <case_study_object> }`  
+	```
+	{
+	  page_number: integer 
+	  item_per_page: integer
+	  filter_by_id: boolean
+	  users: 
+	  [
+          {<case_study_object>},
+          {<case_study_object>},
+          {<case_study_object>}
+	  ]
+	}
+	```  
 * **Error Response:**  
   * **Code:** 404  
   **Content:** `{ message : "case study not found" }` 
@@ -674,9 +932,9 @@ case_study object
    * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
-### POST /v1/case_studies/{case_study_id}
+### POST /v1/case_studies/
 ----
-  Creates a new User and returns the new object.
+Create new case study
 * **URL Params**  
   *Required:* `case_study_id=[integer]`
 * **Headers**  
@@ -694,7 +952,7 @@ case_study object
 
 ### PUT /v1/case_studies/{case_study_id}
 ----
-  Creates a new User and returns the new object.
+Update case study base on id
 * **URL Params**  
   *Required:*`case_study_id=[integer]`
 * **Headers**  
@@ -719,7 +977,7 @@ case_study object
 
 ### DELETE /v1/case_studies/{case_study_id}
 ----
-  Delete case studies
+Delete case study base on id
 * **URL Params**  
   *Required:* `case_study_id=[integer]`
 * **Headers**  

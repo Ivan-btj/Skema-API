@@ -559,136 +559,8 @@ image: (.jpg or.png)
   * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
-## 5. Contact us
 
-contact_us object
-```
-	{
-		contact_us_id: integer
-		email: string
-		name: string
-		message: string
-	}
-```
-
-### GET /v1/contact_us/
-
-  Returns contact request.
-
-* **URL Params**  
-	None
-* **Data Params**  
-  None
-* **Headers**  
-  Content-Type: application/json
-* **Success Response:** 
-* **Code:** 200  
-  **Content:**  `{ message : "Success get contact request content" }`  
-	```
-	{
-	  data: 
-	  [
-          {<contact_us_object>},
-          {<contact_us_object>},
-          {<contact_us_object>}
-	  ]
-	}
-	```     
-* **Error Response:**  
-   * **Code:** 401  
-  **Content:** `{ message : "You are unauthorized to make this request." }`
-
-### GET /v1/contact_us?page_number={integer}&item_per_page={integer}
-
-  Returns contact request with pagination.
-
-* **URL Params**  
-	None
-* **Data Params**  
-  None
-* **Headers**  
-  Content-Type: application/json
-* **Success Response:** 
-* **Code:** 200  
-  **Content:**  `{ message : "Success get contact request content" }`  
-	```
-	{
-	  page_number: integer 
-	  item_per_page: integer
-	  data: 
-	  [
-          {<contact_us_object>},
-          {<contact_us_object>},
-          {<contact_us_object>}
-	  ]
-	}
-	```  
-* **Error Response:**  
-   * **Code:** 401  
-  **Content:** `{ message : "You are unauthorized to make this request." }`
-
-
-### GET /v1/contact_us/{contact_us_id}
-
-  Returns contact request base on id
-
-* **URL Params**  
-  *Required:* `contact_us_id=[integer]`
-* **Data Params**  
-  None
-* **Headers**  
-  Content-Type: application/json
-* **Success Response:** 
-* **Code:** 200  
-  **Content:**  `{ message : "Success get contact request content" }`  
-  `{ <contact_us_object> }`    
-* **Error Response:**  
-  * **Code:** 404  
-  **Content:** `{ message : "Contact request not found" }` 
-  OR
-   * **Code:** 401  
-  **Content:** `{ message : "You are unauthorized to make this request." }`
-
-### POST /v1/contact_us/
-----
-  Create contact request
-* **URL Params**  
-	None
-* **Headers**  
-  Content-Type: application/json
-  Authorization:  `<Bearer Token (JWT)>`  
-* **Data Params**  
-`{ <image_object> }`
-* **Success Response:**  
-* **Code:** 200  
-  **Content:** `{ message : "Success create contact request content" }`  
-  `{ <contact_us_object> }`  
-* **Error Response:**  
-  * **Code:** 401  
-  **Content:** `{ message : "You are unauthorized to make this request." }`
-
-### Delete /v1/contact_us/{contact_us_id}
-
-  Delete contact request base on id
-
-* **URL Params**  
-  *Required:* `contact_us_id=[integer]`
-* **Data Params**  
-  None
-* **Headers**  
-  Content-Type: application/json
-* **Success Response:** 
-* **Code:** 200  
-  **Content:**  `{ message : "Success delete contact request content" }`  
-  `{ <contact_us_object> }`    
-* **Error Response:**  
-  * **Code:** 404  
-  **Content:** `{ message : "Contact request not found" }` 
-  OR
-   * **Code:** 401  
-  **Content:** `{ message : "You are unauthorized to make this request." }`
-
-## 6. Blogs
+## 5. Blogs
 
 blog object
 ```
@@ -852,7 +724,7 @@ Delete blog content base on blog id
   * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
-## 7. Case-studies
+## 6. Case-studies
 
 case_study object
 ```
@@ -901,14 +773,15 @@ case_study object
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
 
-### GET /v1/case_studies?page_number={integer}&item_per_page={integer}&filter_by_id={boolean}
+### GET /v1/case_studies?page_number={integer}&item_per_page={integer}
 
   Returns all case study with pagination
 
 * **URL Params**  
 	None
 * **Data Params**  
-  None
+	  page_number: `<page_number>` 
+	  item_per_page: `<page_size>`
 * **Headers**  
   Content-Type: application/json
 * **Success Response:** 
@@ -918,7 +791,6 @@ case_study object
 	{
 	  page_number: integer 
 	  item_per_page: integer
-	  filter_by_id: boolean
 	  data: 
 	  [
           {<case_study_object>},
@@ -1019,7 +891,7 @@ Delete case study base on id
   * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
-## 8. Products
+## 7. Products
 
 product object
 ```
@@ -1073,7 +945,8 @@ product object
 * **URL Params**  
 	None
 * **Data Params**  
-  None
+	  page_number: `<page_number>` 
+	  item_per_page: `<page_size>`
 * **Headers**  
   Content-Type: application/json
 * **Success Response:** 
@@ -1184,7 +1057,7 @@ Delete case study base on id
   * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
  
-## 9. FAQ
+## 8. FAQ
 
 FAQ object
 ```
@@ -1285,7 +1158,7 @@ Delete page information base on id
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
 
-## 10. Page information
+## 9. Page information
 
 Save data about page information.
 
@@ -1330,7 +1203,8 @@ page object
 * **URL Params**  
 	None
 * **Data Params**  
-  None
+	  page_number: `<page_number>` 
+	  item_per_page: `<page_size>`
 * **Headers**  
   Content-Type: application/json
 * **Success Response:** 
@@ -1437,4 +1311,266 @@ Delete page information base on id
   **Content:** `{ message : "page information not found" }` 
   OR  
   * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
+## 10. Contact us
+
+contact_us object
+```
+	{
+		contact_us_id: integer
+		email: string
+		name: string
+		message: string
+	}
+```
+
+### GET /v1/contact_us/
+
+  Returns contact request.
+
+* **URL Params**  
+	None
+* **Data Params**  
+  None
+* **Headers**  
+  Content-Type: application/json
+* **Success Response:** 
+* **Code:** 200  
+  **Content:**  `{ message : "Success get contact request content" }`  
+	```
+	{
+	  data: 
+	  [
+          {<contact_us_object>},
+          {<contact_us_object>},
+          {<contact_us_object>}
+	  ]
+	}
+	```     
+* **Error Response:**  
+   * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
+### GET /v1/contact_us?page_number={integer}&item_per_page={integer}
+
+  Returns contact request with pagination.
+
+* **URL Params**  
+	None
+* **Data Params**  
+	  page_number: `<page_number>` 
+	  item_per_page: `<page_size>`
+* **Headers**  
+  Content-Type: application/json
+* **Success Response:** 
+* **Code:** 200  
+  **Content:**  `{ message : "Success get contact request content" }`  
+	```
+	{
+	  page_number: integer 
+	  item_per_page: integer
+	  data: 
+	  [
+          {<contact_us_object>},
+          {<contact_us_object>},
+          {<contact_us_object>}
+	  ]
+	}
+	```  
+* **Error Response:**  
+   * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
+
+### GET /v1/contact_us/{contact_us_id}
+
+  Returns contact request base on id
+
+* **URL Params**  
+  *Required:* `contact_us_id=[integer]`
+* **Data Params**  
+  None
+* **Headers**  
+  Content-Type: application/json
+* **Success Response:** 
+* **Code:** 200  
+  **Content:**  `{ message : "Success get contact request content" }`  
+  `{ <contact_us_object> }`    
+* **Error Response:**  
+  * **Code:** 404  
+  **Content:** `{ message : "Contact request not found" }` 
+  OR
+   * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
+### POST /v1/contact_us/
+----
+  Create contact request
+* **URL Params**  
+	None
+* **Headers**  
+  Content-Type: application/json
+  Authorization:  `<Bearer Token (JWT)>`  
+* **Data Params**  
+`{ <image_object> }`
+* **Success Response:**  
+* **Code:** 200  
+  **Content:** `{ message : "Success create contact request content" }`  
+  `{ <contact_us_object> }`  
+* **Error Response:**  
+  * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
+### Delete /v1/contact_us/{contact_us_id}
+
+  Delete contact request base on id
+
+* **URL Params**  
+  *Required:* `contact_us_id=[integer]`
+* **Data Params**  
+  None
+* **Headers**  
+  Content-Type: application/json
+* **Success Response:** 
+* **Code:** 200  
+  **Content:**  `{ message : "Success delete contact request content" }`  
+  `{ <contact_us_object> }`    
+* **Error Response:**  
+  * **Code:** 404  
+  **Content:** `{ message : "Contact request not found" }` 
+  OR
+   * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
+## 11. Request Demo
+
+request object
+```
+	{
+		request_id: integer
+		fullname: string
+		company: string
+		email: string
+		phone_number: string
+		message: string
+	}
+```
+
+### GET /v1/request/
+
+  Returns contact request.
+
+* **URL Params**  
+	None
+* **Data Params**  
+  None
+* **Headers**  
+  Content-Type: application/json
+* **Success Response:** 
+* **Code:** 200  
+  **Content:**  `{ message : "Success get request demo content" }`  
+	```
+	{
+	  data: 
+	  [
+          {<request_object>},
+          {<request_object>},
+          {<request_object>}
+	  ]
+	}
+	```     
+* **Error Response:**  
+   * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
+### GET /v1/request?page_number={integer}&item_per_page={integer}
+
+  Returns contact request with pagination.
+
+* **URL Params**  
+	None
+* **Data Params**  
+	  page_number: `<page_number>` 
+	  item_per_page: `<page_size>`
+* **Headers**  
+  Content-Type: application/json
+* **Success Response:** 
+* **Code:** 200  
+  **Content:**  `{ message : "Success get request demo content" }`  
+	```
+	{
+	  page_number: integer 
+	  item_per_page: integer
+	  data: 
+	  [
+          {<request_object>},
+          {<request_object>},
+          {<request_object>}
+	  ]
+	}
+	```  
+* **Error Response:**  
+   * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
+
+### GET /v1/request/{request_id}
+
+  Returns contact request base on id
+
+* **URL Params**  
+  *Required:* `request_id=[integer]`
+* **Data Params**  
+  None
+* **Headers**  
+  Content-Type: application/json
+* **Success Response:** 
+* **Code:** 200  
+  **Content:**  `{ message : "Success get request demo content" }`  
+  `{ <request_object> }`    
+* **Error Response:**  
+  * **Code:** 404  
+  **Content:** `{ message : "request demo not found" }` 
+  OR
+   * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
+### POST /v1/request/
+----
+  Create contact request
+* **URL Params**  
+	None
+* **Headers**  
+  Content-Type: application/json
+  Authorization:  `<Bearer Token (JWT)>`  
+* **Data Params**  
+`{ <request_object> }`
+* **Success Response:**  
+* **Code:** 200  
+  **Content:** `{ message : "Success create request demo content" }`  
+  `{ <contact_us_object> }`  
+* **Error Response:**  
+  * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
+### Delete /v1/request/{request_id}
+
+  Delete contact request base on id
+
+* **URL Params**  
+  *Required:* `contact_us_id=[integer]`
+* **Data Params**  
+  None
+* **Headers**  
+  Content-Type: application/json
+* **Success Response:** 
+* **Code:** 200  
+  **Content:**  `{ message : "Success delete request demo content" }`  
+  `{ <request_object> }`    
+* **Error Response:**  
+  * **Code:** 404  
+  **Content:** `{ message : "request demo not found" }` 
+  OR
+   * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`

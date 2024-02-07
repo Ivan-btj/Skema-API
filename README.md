@@ -1323,7 +1323,7 @@ page object
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
 
-### GET /v1/pages?page_number={integer}&item_per_page={integer}&filter_by_id={boolean}
+### GET /v1/pages?page_number={integer}&item_per_page={integer}
 
   Returns all page information with pagination
 
@@ -1341,7 +1341,6 @@ page object
 	{
 	  page_number: integer 
 	  item_per_page: integer
-	  filter_by_id: boolean
 	  data: 
 	  [
           {<page_object>},

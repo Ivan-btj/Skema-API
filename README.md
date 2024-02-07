@@ -58,11 +58,12 @@ User-data object
 * **Data Params**  
 ```
   {
+	  role_id: string
+	  role_name: string
+	  access_to_POST/v1/users/: boolean
+	  access_to_GET/v1/users/{user_id}: boolean
+	  access_to_PUT/v1/users/{user_id}: boolean
 	  ....
-    access_to_POST/v1/users/
-    access_to_GET/v1/users/{user_id}
-    access_to_PUT/v1/users/{user_id}
-    ....
   }
 ```
 * **Success Response:**  
@@ -280,8 +281,8 @@ subscriber object
 	{
 		subscriber_id: integer
 		email: string
-		category: string
-		subscribe_date
+		subscription_at
+		category_id: integer 
 	}
 ```
 
@@ -566,8 +567,7 @@ contact_us object
 		contact_us_id: integer
 		email: string
 		name: string
-		address: string
-		social_media: string
+		message: string
 	}
 ```
 
@@ -703,31 +703,31 @@ blog object
 		created_by: string
 		updated_by: string
 		deleted_by: string
-		image_path: string
+		image_path: JSON
 	}
 ```
 
 ### GET /v1/blogs/
 
-  Returns all blogs
+  Returns all blog
 
 * **URL Params**  
 	None
 * **Data Params**  
   None
 * **Headers**  
-  Content-Type: file/image 
+  Content-Type: application/json
 * **Success Response:** 
 * **Code:** 200  
   **Content:**  `{ message : "Success get blog" }`
-    `{ <blogs_object> }`    
+    `{ <blog_object> }`    
 * **Error Response:**  
    * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
 ### GET /v1/blogs?page_number={integer}&item_per_page={integer}&filter_by_id={boolean}
 
-  Returns image base on image name in the system.
+   Returns all blogs with pagination.
 
 * **URL Params**  
 	None
@@ -746,7 +746,7 @@ blog object
 	  page_number: integer 
 	  item_per_page: integer
 	  filter_by_id: boolean
-	  users: 
+	  data: 
 	  [
           {<blog_object>},
           {<blog_object>},
@@ -761,18 +761,18 @@ blog object
 
 ### GET /v1/blogs/{blogs_id}
 
-  Returns blog base on blog name.
+  Returns blog base on blog id.
 
 * **URL Params**  
   *Required:* `blog_id=[integer]`
 * **Data Params**  
   None
 * **Headers**  
-  Content-Type: file/image 
+  Content-Type: application/json
 * **Success Response:** 
 * **Code:** 200  
   **Content:**   `{ message : "Success get blog" }`
-    `{ <blogs_object> }`  
+    `{ <blog_object> }`  
 * **Error Response:**  
   * **Code:** 404  
   **Content:** `{ message : "Blog not found" }` 
@@ -793,8 +793,11 @@ None
 * **Success Response:**  
 * **Code:** 200  
   **Content:**  `{ message : "Success create blog content" }`
-    `{ <blogs_object> }`
-* **Error Response:**  
+    `{ <blog_object> }`
+* **Error Response:** 
+  * **Code:** 404  
+  **Content:** `{ message : "Blog not found" }` 
+  OR 
   * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
@@ -819,8 +822,11 @@ Update blog content base on blog id
 * **Success Response:**  
 * **Code:** 200  
   **Content:**  `{ message : "Success create blog content" }`
-    `{ <blogs_object> }`
-* **Error Response:**  
+    `{ <blog_object> }`
+* **Error Response:**
+  * **Code:** 404  
+  **Content:** `{ message : "Blog not found" }` 
+  OR  
   * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
@@ -838,8 +844,11 @@ Delete blog content base on blog id
 * **Success Response:**  
 * **Code:** 200  
   **Content:**  `{ message : "Success delete blog" }`
-    `{ <blogs_object> }`
-* **Error Response:**  
+    `{ <blog_object> }`
+* **Error Response:**
+  * **Code:** 404  
+  **Content:** `{ message : "Blog not found" }` 
+  OR  
   * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
@@ -858,24 +867,35 @@ case_study object
 		created_by: string
 		updated_by: string
 		deleted_by: string
-		image_path: string
+		category_id: integer
+		image_path: JSON
 	}
 ```
 
 ### GET /v1/case_studies/
 
-  Returns image base on image name in the system.
+  Returns all case study
 
 * **URL Params**  
 	None
 * **Data Params**  
   None
 * **Headers**  
-  Content-Type: file/image 
+  Content-Type: application/json
 * **Success Response:** 
 * **Code:** 200  
   **Content:**  `{ message : "Success get case study" }`
-    `{ <case_study_object> }`    
+```
+	{
+	  data: 
+	  [
+          {<case_study_object>},
+          {<case_study_object>},
+          {<case_study_object>}
+	  ]
+	}
+```  
+  
 * **Error Response:**  
    * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
@@ -883,48 +903,48 @@ case_study object
 
 ### GET /v1/case_studies?page_number={integer}&item_per_page={integer}&filter_by_id={boolean}
 
-  Returns image base on image name in the system.
+  Returns all case study with pagination
 
 * **URL Params**  
 	None
 * **Data Params**  
   None
 * **Headers**  
-  Content-Type: file/image 
+  Content-Type: application/json
 * **Success Response:** 
 * **Code:** 200  
   **Content:**  `{ message : "Success get case study" }`
-    `{ <case_study_object> }`    
-* **Error Response:**  
-   * **Code:** 401  
-  **Content:** `{ message : "You are unauthorized to make this request." }`
-
-### GET /v1/case_studies/{case_study_id}
-
-  Returns image base on image name in the system.
-
-* **URL Params**  
-  *Required:* `case_study_id=[integer]`
-* **Data Params**  
-  None
-* **Headers**  
-  Content-Type: file/image 
-* **Success Response:** 
-* **Code:** 200  
-  **Content:**   `{ message : "Success get case study" }`
-	```
+```
 	{
 	  page_number: integer 
 	  item_per_page: integer
 	  filter_by_id: boolean
-	  users: 
+	  data: 
 	  [
           {<case_study_object>},
           {<case_study_object>},
           {<case_study_object>}
 	  ]
 	}
-	```  
+```  
+* **Error Response:**  
+   * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
+### GET /v1/case_studies/{work_id}
+
+  Returns case study base on case study id
+
+* **URL Params**  
+  *Required:* `work_id=[integer]`
+* **Data Params**  
+  None
+* **Headers**  
+  Content-Type: application/json
+* **Success Response:** 
+* **Code:** 200  
+  **Content:**   `{ message : "Success get case study" }`
+	    `{ <case_study_object> }`  
 * **Error Response:**  
   * **Code:** 404  
   **Content:** `{ message : "case study not found" }` 
@@ -936,7 +956,7 @@ case_study object
 ----
 Create new case study
 * **URL Params**  
-  *Required:* `case_study_id=[integer]`
+None
 * **Headers**  
   Content-Type: application/json
   Authorization:  `<Bearer Token (JWT)>`  
@@ -945,7 +965,7 @@ Create new case study
 * **Success Response:**  
 * **Code:** 200  
   **Content:**  `{ message : "Success create case study content" }`
-    `{ <blogs_object> }`
+    `{ <case_study_object> }`
 * **Error Response:**  
   * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
@@ -954,7 +974,7 @@ Create new case study
 ----
 Update case study base on id
 * **URL Params**  
-  *Required:*`case_study_id=[integer]`
+  *Required:*`work_id=[integer]`
 * **Headers**  
   Content-Type: application/json
   Authorization:  `<Bearer Token (JWT)>`  
@@ -971,7 +991,10 @@ Update case study base on id
 * **Code:** 200  
   **Content:**  `{ message : "Success create case study content" }`
     `{ <case_study_object> }`
-* **Error Response:**  
+* **Error Response:**
+  * **Code:** 404  
+  **Content:** `{ message : "case study not found" }` 
+  OR  
   * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
@@ -979,7 +1002,7 @@ Update case study base on id
 ----
 Delete case study base on id
 * **URL Params**  
-  *Required:* `case_study_id=[integer]`
+  *Required:* `work_id=[integer]`
 * **Headers**  
   Content-Type: application/json
   Authorization:  `<Bearer Token (JWT)>`  
@@ -990,5 +1013,429 @@ Delete case study base on id
   **Content:**  `{ message : "Success delete case study" }`
     `{ <case_study_object> }`
 * **Error Response:**  
+  * **Code:** 404  
+  **Content:** `{ message : "case study not found" }` 
+  OR
+  * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
+## 8. Products
+
+product object
+```
+	{
+		product_id: integer
+		title: string
+		body_text: string
+		visibility: boolean
+		created_at: datetime()
+		updated_at: datetime()
+		deleted_at: datetime()
+		created_by: string
+		updated_by: string
+		deleted_by: string
+		image_path: JSON
+	}
+```
+
+### GET /v1/products/
+
+  Returns all page information
+
+* **URL Params**  
+	None
+* **Data Params**  
+  None
+* **Headers**  
+  Content-Type: application/json
+* **Success Response:** 
+* **Code:** 200  
+  **Content:**  `{ message : "Success get products information" }`
+```
+	{
+	  data: 
+	  [
+          {<product_object>},
+          {<product_object>},
+          {<product_object>}
+	  ]
+	}
+```   
+* **Error Response:**  
+   * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
+
+### GET /v1/products?page_number={integer}&item_per_page={integer}
+
+  Returns all page information with pagination
+
+* **URL Params**  
+	None
+* **Data Params**  
+  None
+* **Headers**  
+  Content-Type: application/json
+* **Success Response:** 
+* **Code:** 200  
+  **Content:**  `{ message : "Success get product information" }`
+
+```
+	{
+	  page_number: integer 
+	  item_per_page: integer
+	  data: 
+	  [
+          {<product_object>},
+          {<product_object>},
+          {<product_object>}
+	  ]
+	}
+```   
+* **Error Response:**  
+   * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
+### GET /v1/products/{product_id}
+
+  Returns page information base on page id
+
+* **URL Params**  
+  *Required:* `product_id=[integer]`
+* **Data Params**  
+  None
+* **Headers**  
+  Content-Type: application/json
+* **Success Response:** 
+* **Code:** 200  
+  **Content:**   `{ message : "Success get product information" }`
+    `{ <product_object> }`  
+* **Error Response:**  
+  * **Code:** 404  
+  **Content:** `{ message : "product information not found" }` 
+  OR
+   * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
+### POST /v1/products/
+----
+Create page information study
+* **URL Params**  
+None
+* **Headers**  
+  Content-Type: application/json
+  Authorization:  `<Bearer Token (JWT)>`  
+* **Data Params**  
+`{ <product_object> }`
+* **Success Response:**  
+* **Code:** 200  
+  **Content:**  `{ message : "Success create product information" }`
+    `{ <product_object> }`
+* **Error Response:**  
+  * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
+### PUT /v1/products/{product_id}
+----
+Update page information base on id
+* **URL Params**  
+  *Required:*`product_id=[integer]`
+* **Headers**  
+  Content-Type: application/json
+  Authorization:  `<Bearer Token (JWT)>`  
+* **Data Params**  
+```
+	{
+		product_id: integer
+		title: string
+		body_text: string
+		visibility: boolean
+	}
+```
+* **Success Response:**  
+* **Code:** 200  
+  **Content:**  `{ message : "Success update product" }`
+    `{ <product_object> }`
+* **Error Response:**  
+  * **Code:** 404  
+  **Content:** `{ message : "product information not found" }` 
+  OR
+  * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
+### DELETE /v1/products/{product_id}
+----
+Delete case study base on id
+* **URL Params**  
+  *Required:* `product_id=[integer]`
+* **Headers**  
+  Content-Type: application/json
+  Authorization:  `<Bearer Token (JWT)>`  
+* **Data Params**  
+	None
+* **Success Response:**  
+* **Code:** 200  
+  **Content:**  `{ message : "Success delete product information" }`
+    `{ <product_object> }`
+* **Error Response:**  
+  * **Code:** 404  
+  **Content:** `{ message : "product information not found" }` 
+  OR
+  * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+ 
+## 9. FAQ
+
+FAQ object
+```
+	{
+		.....
+		question_1: string
+		question_2: string
+		question_: string
+		......
+	}
+```
+
+### GET /v1/products/faq
+
+  Returns all page information
+
+* **URL Params**  
+	None
+* **Data Params**  
+  None
+* **Headers**  
+  Content-Type: application/json
+* **Success Response:** 
+* **Code:** 200  
+  **Content:**  `{ message : "Success get products information" }`
+```
+	{
+	  data: 
+	  [
+          {<product_object>},
+          {<product_object>},
+          {<product_object>}
+	  ]
+	}
+```   
+* **Error Response:**  
+   * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
+### POST /v1/products/faq
+----
+Create page information study
+* **URL Params**  
+None
+* **Headers**  
+  Content-Type: application/json
+  Authorization:  `<Bearer Token (JWT)>`  
+* **Data Params**  
+`{ <product_object> }`
+* **Success Response:**  
+* **Code:** 200  
+  **Content:**  `{ message : "Success create product information" }`
+    `{ <faq_object> }`
+* **Error Response:**  
+  * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
+### PUT /v1/products/faq
+----
+Update page information base on id
+* **URL Params**  
+	None
+* **Headers**  
+  Content-Type: application/json
+  Authorization:  `<Bearer Token (JWT)>`  
+* **Data Params**  
+    `{ <faq_object> }`
+* **Success Response:**  
+* **Code:** 200  
+  **Content:**  `{ message : "Success update product" }`
+    `{ <case_study_object> }`
+* **Error Response:**  
+  * **Code:** 404  
+  **Content:** `{ message : "product information not found" }` 
+  OR
+  * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
+### DELETE /v1/products/faq
+----
+Delete page information base on id
+* **URL Params**  
+	None
+* **Headers**  
+  Content-Type: application/json
+  Authorization:  `<Bearer Token (JWT)>`  
+* **Data Params**  
+	None
+* **Success Response:**  
+* **Code:** 200  
+  **Content:**  `{ message : "Success delete product information" }`
+    `{ <faq_object> }`
+* **Error Response:** 
+  * **Code:** 404  
+  **Content:** `{ message : "product information not found" }` 
+  OR 
+  * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
+
+## 10. Page information
+
+Save data about page information.
+
+page object
+```
+   {
+        page_id: integer
+        name : string
+        content: JSON
+        created_at: datetime()
+        updated_at: datetime()
+        deleted_at: datetime()
+        created_by: string
+        updated_by: string
+        deleted_by: string
+    }
+```
+
+### GET /v1/pages/
+
+  Returns all page information
+
+* **URL Params**  
+	None
+* **Data Params**  
+  None
+* **Headers**  
+  Content-Type: application/json
+* **Success Response:** 
+* **Code:** 200  
+  **Content:**  `{ message : "Success page information" }`
+    `{ <page_object> }`    
+* **Error Response:**  
+   * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
+
+### GET /v1/pages?page_number={integer}&item_per_page={integer}&filter_by_id={boolean}
+
+  Returns all page information with pagination
+
+* **URL Params**  
+	None
+* **Data Params**  
+  None
+* **Headers**  
+  Content-Type: application/json
+* **Success Response:** 
+* **Code:** 200  
+  **Content:**  `{ message : "Success get case study" }`
+
+```
+	{
+	  page_number: integer 
+	  item_per_page: integer
+	  filter_by_id: boolean
+	  data: 
+	  [
+          {<page_object>},
+          {<page_object>},
+          {<page_object>}
+	  ]
+	}
+```   
+* **Error Response:**  
+   * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
+### GET /v1/pages/{page_id}
+
+  Returns page information base on page id
+
+* **URL Params**  
+  *Required:* `page_id=[integer]`
+* **Data Params**  
+  None
+* **Headers**  
+  Content-Type: application/json
+* **Success Response:** 
+* **Code:** 200  
+  **Content:**   `{ message : "Success get page information" }`
+    `{ <page_object> }`  
+* **Error Response:**  
+  * **Code:** 404  
+  **Content:** `{ message : "page information not found" }` 
+  OR
+   * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
+### POST /v1/pages/
+----
+Create page information study
+* **URL Params**  
+None
+* **Headers**  
+  Content-Type: application/json
+  Authorization:  `<Bearer Token (JWT)>`  
+* **Data Params**  
+`{ <page_object> }`
+* **Success Response:**  
+* **Code:** 200  
+  **Content:**  `{ message : "Success create page information" }`
+    `{ <blogs_object> }`
+* **Error Response:**  
+  * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
+### PUT /v1/pages/{page_id}
+----
+Update page information base on id
+* **URL Params**  
+  *Required:*`page_id=[integer]`
+* **Headers**  
+  Content-Type: application/json
+  Authorization:  `<Bearer Token (JWT)>`  
+* **Data Params**  
+```
+	{
+        name : string
+        content: JSON
+	}
+```
+* **Success Response:**  
+* **Code:** 200  
+  **Content:**  `{ message : "Success update page information" }`
+    `{ <page_object> }`
+* **Error Response:**
+  * **Code:** 404  
+  **Content:** `{ message : "page information not found" }` 
+  OR  
+  * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
+### DELETE /v1/pages/{page_id}
+----
+Delete page information base on id
+* **URL Params**  
+  *Required:* `page_id=[integer]`
+* **Headers**  
+  Content-Type: application/json
+  Authorization:  `<Bearer Token (JWT)>`  
+* **Data Params**  
+	None
+* **Success Response:**  
+* **Code:** 200  
+  **Content:**  `{ message : "Success delete page information" }`
+    `{ <page_object> }`
+* **Error Response:**
+  * **Code:** 404  
+  **Content:** `{ message : "page information not found" }` 
+  OR  
   * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`

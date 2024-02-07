@@ -4,11 +4,11 @@
 * User object
 ```
 {
-  id: integer
+  user_id: integer
+  role_id: integer
   username: string
   email: string
   password: string
-  role: string
   created_at: datetime()
   updated_at: datetime()
   deactivated_at: datetime()
@@ -17,15 +17,12 @@
 User-data object
 ```
 {
-  id: integer
-  name: string
+  user_id: integer
+  role_id: integer
   username: string
   created_at: datetime()
-  created_by: datetime()
   updated_at: datetime()
-  updated_by: string
   deactivated_at: datetime()
-  deactivated_by: string
 }
 ```
 ### POST /v1/auth/register
@@ -315,7 +312,7 @@ subscriber object
    * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
-### GET /v1/subscribers/?page_number={integer}&item_per_page={integer}&filter_by_id={boolean}
+### GET /v1/subscribers/?page_number={integer}&item_per_page={integer}
 
   Returns all subscriber with pagination.
 
@@ -325,7 +322,6 @@ subscriber object
   Query Parameter: 
 	  page_number: `<page_number>` 
 	  item_per_page: `<page_size>`
-	  filter_by_id: `<filter_by_id>`
 * **Headers**  
   Content-Type: application/json 
 * **Success Response:** 
@@ -335,7 +331,6 @@ subscriber object
 	{
 	  page_number: integer 
 	  item_per_page: integer
-	  filter_by_id: boolean
 	  data: 
 	  [
           {<subscriber_object>},
@@ -415,7 +410,6 @@ subscriber object
 image object: 
 
 image: (.jpg or.png)
-
 
 ### GET /v1/images/{image_folder}/
 
@@ -688,7 +682,7 @@ Update blog content base on blog id
 		title: string
 		body_text: string
 		visibility: boolean
-		image_path: string
+		image_path: JSON
 	}
 ```
 * **Success Response:**  
@@ -856,7 +850,7 @@ Update case study base on id
 		title: string
 		body_text: string
 		visibility: boolean
-		image_path: string
+		image_path: JSON
 	}
 ```
 * **Success Response:**  
@@ -898,7 +892,8 @@ product object
 	{
 		product_id: integer
 		title: string
-		body_text: string
+		body_goals: string
+		body_features: string
 		visibility: boolean
 		created_at: datetime()
 		updated_at: datetime()
@@ -1021,8 +1016,10 @@ Update page information base on id
 	{
 		product_id: integer
 		title: string
-		body_text: string
+		body_goals: string
+		body_features: string
 		visibility: boolean
+		image_path: JSON
 	}
 ```
 * **Success Response:**  
@@ -1082,7 +1079,7 @@ FAQ object
   Content-Type: application/json
 * **Success Response:** 
 * **Code:** 200  
-  **Content:**  `{ message : "Success get products information" }`
+  **Content:**  `{ message : "Success get FAQ information" }`
 ```
 	{
 	  data: 
@@ -1109,7 +1106,7 @@ None
 `{ <product_object> }`
 * **Success Response:**  
 * **Code:** 200  
-  **Content:**  `{ message : "Success create product information" }`
+  **Content:**  `{ message : "Success create FAQ information" }`
     `{ <faq_object> }`
 * **Error Response:**  
   * **Code:** 401  
@@ -1127,11 +1124,11 @@ Update page information base on id
     `{ <faq_object> }`
 * **Success Response:**  
 * **Code:** 200  
-  **Content:**  `{ message : "Success update product" }`
-    `{ <case_study_object> }`
+  **Content:**  `{ message : "Success FAQ product" }`
+    `{ <faq_object> }`
 * **Error Response:**  
   * **Code:** 404  
-  **Content:** `{ message : "product information not found" }` 
+  **Content:** `{ message : "FAQ not found" }` 
   OR
   * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
@@ -1148,19 +1145,118 @@ Delete page information base on id
 	None
 * **Success Response:**  
 * **Code:** 200  
-  **Content:**  `{ message : "Success delete product information" }`
+  **Content:**  `{ message : "Success delete FAQ" }`
     `{ <faq_object> }`
 * **Error Response:** 
   * **Code:** 404  
-  **Content:** `{ message : "product information not found" }` 
+  **Content:** `{ message : "FAQ not found" }` 
   OR 
   * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
+## 9. key-technology
 
-## 9. Page information
+keyt object
+```
+	{
+		.....
+		feature_1: string
+		feature_2: string
+		feature_3: string
+		......
+	}
+```
 
-Save data about page information.
+### GET /v1/products/keyt
+
+  Returns all page information
+
+* **URL Params**  
+	None
+* **Data Params**  
+  None
+* **Headers**  
+  Content-Type: application/json
+* **Success Response:** 
+* **Code:** 200  
+  **Content:**  `{ message : "Success get key technology information" }`
+```
+	{
+	  data: 
+	  [
+          {<keyt_object>},
+          {<keyt_object>},
+          {<keyt_object>}
+	  ]
+	}
+```   
+* **Error Response:**  
+   * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
+### POST /v1/products/keyt
+----
+Create page information study
+* **URL Params**  
+None
+* **Headers**  
+  Content-Type: application/json
+  Authorization:  `<Bearer Token (JWT)>`  
+* **Data Params**  
+`{ <keyt_object> }`
+* **Success Response:**  
+* **Code:** 200  
+  **Content:**  `{ message : "Success create key technology information" }`
+    `{ <keyt_object> }`
+* **Error Response:**  
+  * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
+### PUT /v1/products/keyt
+----
+Update page information base on id
+* **URL Params**  
+	None
+* **Headers**  
+  Content-Type: application/json
+  Authorization:  `<Bearer Token (JWT)>`  
+* **Data Params**  
+    `{ <faq_object> }`
+* **Success Response:**  
+* **Code:** 200  
+  **Content:**  `{ message : "Success update product" }`
+    `{ <keyt_object> }`
+* **Error Response:**  
+  * **Code:** 404  
+  **Content:** `{ message : "product information not found" }` 
+  OR
+  * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
+### DELETE /v1/products/keyt
+----
+Delete page information base on id
+* **URL Params**  
+	None
+* **Headers**  
+  Content-Type: application/json
+  Authorization:  `<Bearer Token (JWT)>`  
+* **Data Params**  
+	None
+* **Success Response:**  
+* **Code:** 200  
+  **Content:**  `{ message : "Success delete key technology information" }`
+    `{ <keyt_object> }`
+* **Error Response:** 
+  * **Code:** 404  
+  **Content:** `{ message : "key technology not found" }` 
+  OR 
+  * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
+## 10. Page information
+
+Save data about static page information.
 
 page object
 ```
@@ -1168,12 +1264,8 @@ page object
         page_id: integer
         name : string
         content: JSON
-        created_at: datetime()
-        updated_at: datetime()
-        deleted_at: datetime()
         created_by: string
         updated_by: string
-        deleted_by: string
     }
 ```
 
@@ -1313,7 +1405,7 @@ Delete page information base on id
   * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
-## 10. Contact us
+## 11. Contact us
 
 contact_us object
 ```
@@ -1322,6 +1414,7 @@ contact_us object
 		email: string
 		name: string
 		message: string
+		category_id : integer
 	}
 ```
 
@@ -1443,7 +1536,7 @@ contact_us object
    * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
-## 11. Request Demo
+## 12. Request Demo
 
 request object
 ```
@@ -1549,7 +1642,7 @@ request object
 * **Success Response:**  
 * **Code:** 200  
   **Content:** `{ message : "Success create request demo content" }`  
-  `{ <contact_us_object> }`  
+  `{ <request_object> }`  
 * **Error Response:**  
   * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
@@ -1559,7 +1652,7 @@ request object
   Delete contact request base on id
 
 * **URL Params**  
-  *Required:* `contact_us_id=[integer]`
+  *Required:* `request_id=[integer]`
 * **Data Params**  
   None
 * **Headers**  

@@ -2,7 +2,7 @@
 
 ## 1. Authentication
 
-* User object
+ User object
 ```
 {
   user_id: integer
@@ -272,141 +272,10 @@ User-data object
   * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
-## 3. Subscription/Subscriber
-
-subscriber object
-```
-	{
-		subscriber_id: integer
-		email: string
-		subscription_at
-		category_id: integer 
-	}
-```
-
-### GET /v1/subscribers/
-
-  Returns all subscriber.
-
-* **URL Params**  
-	None
-* **Data Params**  
-  None
-* **Headers**  
-  Content-Type: application/json 
-* **Success Response:** 
-* **Code:** 200  
-  **Content:**  `{ message : "Success get subscriber" }` 
-	```
-	{
-	  data: 
-	  [
-          {<subscriber_object>},
-          {<subscriber_object>},
-          {<subscriber_object>}
-	  ]
-	}
-	```
-* **Error Response:**  
-  * **Code:** 404  
-  **Content:** `{ message : "Subscriber not found" }`  
-   * **Code:** 401  
-  **Content:** `{ message : "You are unauthorized to make this request." }`
-
-### GET /v1/subscribers/?page_number={integer}&item_per_page={integer}
-
-  Returns all subscriber with pagination.
-
-* **URL Params**  
-	None
-* **Data Params**  
-  Query Parameter: 
-	  page_number: `<page_number>` 
-	  item_per_page: `<page_size>`
-* **Headers**  
-  Content-Type: application/json 
-* **Success Response:** 
-* **Code:** 200  
-  **Content:**  `{ message : "Success get subscriber" }` 
-	```
-	{
-	  page_number: integer 
-	  item_per_page: integer
-	  data: 
-	  [
-          {<subscriber_object>},
-          {<subscriber_object>},
-          {<subscriber_object>}
-	  ]
-	}
-	```
-* **Error Response:**  
-  * **Code:** 404  
-  **Content:** `{ message : "Subscriber not found" }`  
-   * **Code:** 401  
-  **Content:** `{ message : "You are unauthorized to make this request." }`
-
-### GET /v1/subscribers/{subscriber_id}
-
-  Return subscriber base on subcriber id.
-
-* **URL Params**  
-  *Required:* `subscriber_id=[integer]`
-* **Data Params**  
-  None
-* **Headers**  
-  Content-Type: application/json
-* **Success Response:** 
-* **Code:** 200  
-  **Content:**   `{ message : "Success get subscriber" }` 
-  `{ <subscriber_object> }` 
-* **Error Response:**  
-  * **Code:** 404  
-  **Content:** `{ message : "Subscriber not found" }` 
-   * **Code:** 401  
-  **Content:** `{ message : "You are unauthorized to make this request." }`
-
-### POST /v1/subscribers/
-----
-  Create subscriber.
-* **URL Params**  
-	None
-* **Headers**  
-  Content-Type: file/image 
-  Authorization:  `<Bearer Token (JWT)>`
-* **Data Params**  
-`{ <image_object> }`
-* **Success Response:**  
-* **Code:** 200  
-  **Content:** `{ message : "Success add subscriber" }`  
-   `{ <subscriber_object> }` 
-* **Error Response:**  
-  * **Code:** 401  
-  **Content:** `{ message : "You are unauthorized to make this request." }`
 
 
-### DELETE /v1/subcribers/{subscriber_id}
-----
-  Delete subscriber base on id.
-* **URL Params**  
-  *Required:* `subscriber_id=[integer]`
-* **Headers**  
-  Content-Type: file/image
-  Authorization:  `<Bearer Token (JWT)>`
-* **Data Params**  
-	None
-* **Success Response:**  
-* **Code:** 200  
-  **Content:**  `{ message : "Success delete subscriber" }`  
-  `{ <subscriber_object> }`  
-* **Error Response:**  
-  * **Code:** 404  
-  **Content:** `{ message : "Subscriber not found" }`  
-  OR  
-  * **Code:** 401  
-  **Content:** `{ message : "You are unauthorized to make this request." }`
 
-## 4. Images
+## 3. Images
 
 image object: 
 
@@ -555,7 +424,7 @@ image: (.jpg or.png)
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
 
-## 5. Blogs
+## 4. Blogs
 
 blog object
 ```
@@ -715,6 +584,170 @@ Delete blog content base on blog id
 * **Error Response:**
   * **Code:** 404  
   **Content:** `{ message : "Blog not found" }` 
+  OR  
+  * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
+## 5. Subscription/Subscriber
+
+subscriber object
+```
+	{
+		subscriber_id: integer
+		email: string
+		subscription_at
+		category_id: integer 
+	}
+```
+
+### GET /v1/blogs/subscribers/
+
+  Returns all subscriber.
+
+* **URL Params**  
+	None
+* **Data Params**  
+  None
+* **Headers**  
+  Content-Type: application/json 
+* **Success Response:** 
+* **Code:** 200  
+  **Content:**  `{ message : "Success get subscriber" }` 
+	```
+	{
+	  data: 
+	  [
+          {<subscriber_object>},
+          {<subscriber_object>},
+          {<subscriber_object>}
+	  ]
+	}
+	```
+* **Error Response:**  
+  * **Code:** 404  
+  **Content:** `{ message : "Subscriber not found" }`  
+   * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
+### GET /v1/blogs/subscribers/?page_number={integer}&item_per_page={integer}
+
+  Returns all subscriber with pagination.
+
+* **URL Params**  
+	None
+* **Data Params**  
+  Query Parameter: 
+	  page_number: `<page_number>` 
+	  item_per_page: `<page_size>`
+* **Headers**  
+  Content-Type: application/json 
+* **Success Response:** 
+* **Code:** 200  
+  **Content:**  `{ message : "Success get subscriber" }` 
+	```
+	{
+	  page_number: integer 
+	  item_per_page: integer
+	  data: 
+	  [
+          {<subscriber_object>},
+          {<subscriber_object>},
+          {<subscriber_object>}
+	  ]
+	}
+	```
+* **Error Response:**  
+  * **Code:** 404  
+  **Content:** `{ message : "Subscriber not found" }`  
+   * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
+### GET /v1/blogs/subscribers/{subscriber_id}
+
+  Return subscriber base on subcriber id.
+
+* **URL Params**  
+  *Required:* `subscriber_id=[integer]`
+* **Data Params**  
+  None
+* **Headers**  
+  Content-Type: application/json
+* **Success Response:** 
+* **Code:** 200  
+  **Content:**   `{ message : "Success get subscriber" }` 
+  `{ <subscriber_object> }` 
+* **Error Response:**  
+  * **Code:** 404  
+  **Content:** `{ message : "Subscriber not found" }` 
+   * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
+### POST /blogs/v1/subscribers/
+----
+  Create subscriber.
+* **URL Params**  
+	None
+* **Headers**  
+  Content-Type: file/image 
+  Authorization:  `<Bearer Token (JWT)>`
+* **Data Params**  
+```
+	{
+		email: string
+		subscription_at
+		category_id: integer 
+	}
+```
+* **Success Response:**  
+* **Code:** 200  
+  **Content:** `{ message : "Success add subscriber" }`  
+   `{ <subscriber_object> }` 
+* **Error Response:**  
+  * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
+### PUT /v1/blogs/subcribers/{subscriber_id}
+----
+  Delete subscriber base on id.
+* **URL Params**  
+  *Required:* `subscriber_id=[integer]`
+* **Headers**  
+  Content-Type: file/image
+  Authorization:  `<Bearer Token (JWT)>`
+* **Data Params**  
+```
+	{
+		category_id: integer 
+	}
+```
+* **Success Response:**  
+* **Code:** 200  
+  **Content:**  `{ message : "Success delete subscriber" }`  
+  `{ <subscriber_object> }`  
+* **Error Response:**  
+  * **Code:** 404  
+  **Content:** `{ message : "Subscriber not found" }`  
+  OR  
+  * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
+### DELETE /v1/blogs/subcribers/{subscriber_id}
+----
+  Delete subscriber base on id.
+* **URL Params**  
+  *Required:* `subscriber_id=[integer]`
+* **Headers**  
+  Content-Type: file/image
+  Authorization:  `<Bearer Token (JWT)>`
+* **Data Params**  
+	None
+* **Success Response:**  
+* **Code:** 200  
+  **Content:**  `{ message : "Success delete subscriber" }`  
+  `{ <subscriber_object> }`  
+* **Error Response:**  
+  * **Code:** 404  
+  **Content:** `{ message : "Subscriber not found" }`  
   OR  
   * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
@@ -1154,12 +1187,11 @@ Delete page information base on id
   * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
-## 9. Features
+## 9. Features (Sub Product)
 
 product_feature object
 ```
 	{
-		product_feature_id: string
 		product_id : string
 		feature_id: string
 		title: string
@@ -1177,14 +1209,18 @@ feature object
 	}
 ```
 
-### GET /v1/products/feature/{product_id}
+### GET /v1/products/features/
 
-  Returns all feature information with product id
+  Returns all feature information with specific product id
 
 * **URL Params**  
 	None
 * **Data Params**  
-  None
+```
+	{
+		product_id: string
+	}
+```
 * **Headers**  
   Content-Type: application/json
 * **Success Response:** 
@@ -1204,7 +1240,7 @@ feature object
    * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
-### POST /v1/products/featuers/{product_id}
+### POST /v1/products/featuers/
 ----
 Create page information study
 * **URL Params**  
@@ -1213,37 +1249,42 @@ None
   Content-Type: application/json
   Authorization:  `<Bearer Token (JWT)>`  
 * **Data Params**  
-`{ <keyt_object> }`
+`{ <product_feature_object> }`
 * **Success Response:**  
 * **Code:** 200  
   **Content:**  `{ message : "Success create key technology information" }`
-    `{ <keyt_object> }`
+    `{ <feature_object> }`
 * **Error Response:**  
   * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
-### PUT /v1/products/feature/{product_id}/{feature_id}
+### PUT /v1/products/features/{feature_id}
 ----
 Update page information base on id
 * **URL Params**  
-	None
+None
 * **Headers**  
   Content-Type: application/json
   Authorization:  `<Bearer Token (JWT)>`  
 * **Data Params**  
-    `{ <feature_object> }`
+```
+	{
+		product_id: string
+		content: string
+	}
+```
 * **Success Response:**  
 * **Code:** 200  
-  **Content:**  `{ message : "Success update product" }`
+  **Content:**  `{ message : "Success update feature" }`
     `{ <keyt_object> }`
 * **Error Response:**  
   * **Code:** 404  
-  **Content:** `{ message : "product information not found" }` 
+  **Content:** `{ message : "feature not found not found" }` 
   OR
   * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
-### DELETE /v1/products/{product_id}/{feature_id}
+### DELETE /v1/products/{feature_id}
 ----
 Delete page information base on id
 * **URL Params**  
@@ -1252,14 +1293,18 @@ Delete page information base on id
   Content-Type: application/json
   Authorization:  `<Bearer Token (JWT)>`  
 * **Data Params**  
-	None
+```
+	{
+		product_id: string
+	}
+```
 * **Success Response:**  
 * **Code:** 200  
-  **Content:**  `{ message : "Success delete key technology information" }`
+  **Content:**  `{ message : "Success delete feature information" }`
     `{ <feature_object> }`
 * **Error Response:** 
   * **Code:** 404  
-  **Content:** `{ message : "key technology not found" }` 
+  **Content:** `{ message : "feature not found" }` 
   OR 
   * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`

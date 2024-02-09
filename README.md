@@ -1405,20 +1405,20 @@ Delete page information base on id
   * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
-## 11. Contact us
+## 11. Contact
 
-contact_us object
+contact object
 ```
 	{
-		contact_us_id: integer
+		contact_id: integer
 		email: string
 		name: string
 		message: string
-		category_id : integer
+		category_name : string
 	}
 ```
 
-### GET /v1/contact_us/
+### GET /v1/contact/
 
   Returns contact request.
 
@@ -1435,9 +1435,9 @@ contact_us object
 	{
 	  data: 
 	  [
-          {<contact_us_object>},
-          {<contact_us_object>},
-          {<contact_us_object>}
+          {<contact_object>},
+          {<contact_object>},
+          {<contact_object>}
 	  ]
 	}
 	```     
@@ -1445,7 +1445,7 @@ contact_us object
    * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
-### GET /v1/contact_us?page_number={integer}&item_per_page={integer}
+### GET /v1/contact?page_number={integer}&item_per_page={integer}
 
   Returns contact request with pagination.
 
@@ -1476,12 +1476,12 @@ contact_us object
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
 
-### GET /v1/contact_us/{contact_us_id}
+### GET /v1/contact_us/{contact_id}
 
   Returns contact request base on id
 
 * **URL Params**  
-  *Required:* `contact_us_id=[integer]`
+  *Required:* `contact_id=[integer]`
 * **Data Params**  
   None
 * **Headers**  
@@ -1489,7 +1489,7 @@ contact_us object
 * **Success Response:** 
 * **Code:** 200  
   **Content:**  `{ message : "Success get contact request content" }`  
-  `{ <contact_us_object> }`    
+  `{ <contact_object> }`    
 * **Error Response:**  
   * **Code:** 404  
   **Content:** `{ message : "Contact request not found" }` 
@@ -1497,7 +1497,7 @@ contact_us object
    * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
-### POST /v1/contact_us/
+### POST /v1/contact/
 ----
   Create contact request
 * **URL Params**  
@@ -1510,17 +1510,17 @@ contact_us object
 * **Success Response:**  
 * **Code:** 200  
   **Content:** `{ message : "Success create contact request content" }`  
-  `{ <contact_us_object> }`  
+  `{ <contact_object> }`  
 * **Error Response:**  
   * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
-### Delete /v1/contact_us/{contact_us_id}
+### Delete /v1/contact/{contact_id}
 
   Delete contact request base on id
 
 * **URL Params**  
-  *Required:* `contact_us_id=[integer]`
+  *Required:* `contact_id=[integer]`
 * **Data Params**  
   None
 * **Headers**  
@@ -1528,7 +1528,7 @@ contact_us object
 * **Success Response:** 
 * **Code:** 200  
   **Content:**  `{ message : "Success delete contact request content" }`  
-  `{ <contact_us_object> }`    
+  `{ <contact_object> }`    
 * **Error Response:**  
   * **Code:** 404  
   **Content:** `{ message : "Contact request not found" }` 

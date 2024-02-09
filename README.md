@@ -1,4 +1,5 @@
 
+
 ## 1. Authentication
 
 * User object
@@ -57,15 +58,15 @@ User-data object
   {
 	  role_id: string
 	  role_name: string
-	  access_to_POST/v1/users/: boolean
-	  access_to_GET/v1/users/{user_id}: boolean
-	  access_to_PUT/v1/users/{user_id}: boolean
-	  ....
+	  access_to_user_management: boolean
+	  access_to_product: boolean
+	  access_to_case_studies: boolean
+	  access_to_blog: boolean
   }
 ```
 * **Success Response:**  
 * **Code:** 200  
-  **Content:**  `{ message : "Success create users" }`
+  **Content:**  `{ message : "Success create roles" }`
   `{ <user_object> }` 
 
 ### GET /v1/auth/login
@@ -1059,11 +1060,10 @@ Delete case study base on id
 FAQ object
 ```
 	{
-		.....
-		question_1: string
-		question_2: string
-		question_: string
-		......
+		product_faq_id: string
+		product_id: string
+		faq_content: JSON
+		key_technology: JSON
 	}
 ```
 
@@ -1112,7 +1112,7 @@ None
   * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
-### PUT /v1/products/faq
+### PUT /v1/products/faq/
 ----
 Update page information base on id
 * **URL Params**  
@@ -1154,22 +1154,32 @@ Delete page information base on id
   * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
-## 9. key-technology
+## 9. Features
 
-keyt object
+product_feature object
 ```
 	{
-		.....
-		feature_1: string
-		feature_2: string
-		feature_3: string
-		......
+		product_feature_id: string
+		product_id : string
+		feature_id: string
+		title: string
+		content: string
 	}
 ```
 
-### GET /v1/products/keyt
 
-  Returns all page information
+feature object
+```
+	{
+		feature_id: string
+		title: string
+		content: string
+	}
+```
+
+### GET /v1/products/feature/{product_id}
+
+  Returns all feature information with product id
 
 * **URL Params**  
 	None
@@ -1184,9 +1194,9 @@ keyt object
 	{
 	  data: 
 	  [
-          {<keyt_object>},
-          {<keyt_object>},
-          {<keyt_object>}
+          {<feature_object>},
+          {<feature_object>},
+          {<feature_object>}
 	  ]
 	}
 ```   
@@ -1194,7 +1204,7 @@ keyt object
    * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
-### POST /v1/products/keyt
+### POST /v1/products/featuers/{product_id}
 ----
 Create page information study
 * **URL Params**  
@@ -1212,7 +1222,7 @@ None
   * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
-### PUT /v1/products/keyt
+### PUT /v1/products/feature/{product_id}/{feature_id}
 ----
 Update page information base on id
 * **URL Params**  
@@ -1221,7 +1231,7 @@ Update page information base on id
   Content-Type: application/json
   Authorization:  `<Bearer Token (JWT)>`  
 * **Data Params**  
-    `{ <faq_object> }`
+    `{ <feature_object> }`
 * **Success Response:**  
 * **Code:** 200  
   **Content:**  `{ message : "Success update product" }`
@@ -1233,7 +1243,7 @@ Update page information base on id
   * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
-### DELETE /v1/products/keyt
+### DELETE /v1/products/{product_id}/{feature_id}
 ----
 Delete page information base on id
 * **URL Params**  
@@ -1246,7 +1256,7 @@ Delete page information base on id
 * **Success Response:**  
 * **Code:** 200  
   **Content:**  `{ message : "Success delete key technology information" }`
-    `{ <keyt_object> }`
+    `{ <feature_object> }`
 * **Error Response:** 
   * **Code:** 404  
   **Content:** `{ message : "key technology not found" }` 
@@ -1254,18 +1264,28 @@ Delete page information base on id
   * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
-## 10. Page information
+## 10. Page information (AllPages)
 
 Save data about static page information.
+
+page object (buat schema ini dengan menggabungkan seluruh table yang berhubungan dengan AllPage)
 
 page object
 ```
    {
         page_id: integer
-        name : string
+        page_name : string
         content: JSON
         created_by: string
         updated_by: string
+    }
+```
+
+AllComponent object
+```
+   {
+        component_id: integer
+        content: JSON
     }
 ```
 
@@ -1384,6 +1404,31 @@ Update page information base on id
   * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
+### PUT /v1/pages/component/{component_id}
+----
+Update component information base on id
+* **URL Params**  
+  *Required:*`page_id=[integer]`
+* **Headers**  
+  Content-Type: application/json
+  Authorization:  `<Bearer Token (JWT)>`  
+* **Data Params**  
+```
+	{
+        content: JSON
+	}
+```
+* **Success Response:**  
+* **Code:** 200  
+  **Content:**  `{ message : "Success update page information" }`
+    `{ <component_object> }`
+* **Error Response:**
+  * **Code:** 404  
+  **Content:** `{ message : "page information not found" }` 
+  OR  
+  * **Code:** 401  
+  **Content:** `{ message : "You are unauthorized to make this request." }`
+
 ### DELETE /v1/pages/{page_id}
 ----
 Delete page information base on id
@@ -1465,9 +1510,9 @@ contact object
 	  item_per_page: integer
 	  data: 
 	  [
-          {<contact_us_object>},
-          {<contact_us_object>},
-          {<contact_us_object>}
+          {<contact_object>},
+          {<contact_object>},
+          {<contact_object>}
 	  ]
 	}
 	```  
@@ -1476,7 +1521,7 @@ contact object
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
 
-### GET /v1/contact_us/{contact_id}
+### GET /v1/contact/{contact_id}
 
   Returns contact request base on id
 

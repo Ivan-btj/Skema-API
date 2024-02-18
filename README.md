@@ -1,5 +1,6 @@
 
 
+
 ## 1. Authentication
 
  User object
@@ -281,12 +282,22 @@ image object:
 
 image: (.jpg or.png)
 
-### GET /v1/images/{image_folder}/
+image_response object: 
 
-  Returns all image in the folder.
+	{
+	  image_name: string
+	  frontend_path: string
+	}
+
+### GET /v1/images/{folder_name}/{image_name}
+
+  Returns all image in the folder or specific image.
 
 * **URL Params**  
-	*Required:* `image_folder=[string]`
+	*Required:* 
+	`folder_name=[string]`
+	*Optional:* 
+	`image_name=[string]`
 * **Data Params**  
   None
 * **Headers**  
@@ -356,7 +367,7 @@ image: (.jpg or.png)
 * **Success Response:** 
 * **Code:** 200  
   **Content:**  `{ message : "Success get image" }`  
-  `{ <image_object> }`` 
+  `{ <image_response> }`` 
 * **Error Response:**  
   * **Code:** 404  
   **Content:** `{ message : "Image not found" }`  
@@ -375,30 +386,8 @@ image: (.jpg or.png)
 * **Success Response:**  
 * **Code:** 200  
   **Content:**  `{ message : "Success add image" }`  
-  `{ <image_object> }`    
+  `{ <image_response> }`    
 * **Error Response:**  
-  * **Code:** 401  
-  **Content:** `{ message : "You are unauthorized to make this request." }`
-
-### PUT /v1/images/{image_folder}/{image_name}
-----
-  Update image.
-* **URL Params**  
-   *Required:* `image_folder=[string]`  
-   *Required:* `image_name=[string]`
-* **Headers**  
-  Content-Type: file/image
-  Authorization:  `<Bearer Token (JWT)>`
-* **Data Params**  
-`{ <image_object> }`
-* **Success Response:**  
-* **Code:** 200  
-  **Content:**  `{ message : "Success update image" }`  
-  `{ <image_object> }`    
-* **Error Response:**  
-  * **Code:** 404  
-  **Content:** `{ message : "Image not found" }`  
-  OR  
   * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
@@ -588,21 +577,21 @@ Delete blog content base on blog id
   * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
-## 5. Subscription/Subscriber
+## 5. Subscription/newsletter
 
-subscriber object
+newsletter object
 ```
 	{
-		subscriber_id: integer
+		newsletter_id: integer
 		email: string
 		subscription_at
 		category_id: integer 
 	}
 ```
 
-### GET /v1/blogs/subscribers/
+### GET /v1/blogs/newsletters/
 
-  Returns all subscriber.
+  Returns all newsletter.
 
 * **URL Params**  
 	None
@@ -612,26 +601,26 @@ subscriber object
   Content-Type: application/json 
 * **Success Response:** 
 * **Code:** 200  
-  **Content:**  `{ message : "Success get subscriber" }` 
+  **Content:**  `{ message : "Success get newsletter" }` 
 	```
 	{
 	  data: 
 	  [
-          {<subscriber_object>},
-          {<subscriber_object>},
-          {<subscriber_object>}
+          {<newsletter_object>},
+          {<newsletter_object>},
+          {<newsletter_object>}
 	  ]
 	}
 	```
 * **Error Response:**  
   * **Code:** 404  
-  **Content:** `{ message : "Subscriber not found" }`  
+  **Content:** `{ message : "newsletter not found" }`  
    * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
-### GET /v1/blogs/subscribers/?page_number={integer}&item_per_page={integer}
+### GET /v1/blogs/newsletters/?page_number={integer}&item_per_page={integer}
 
-  Returns all subscriber with pagination.
+  Returns all newsletter with pagination.
 
 * **URL Params**  
 	None
@@ -643,48 +632,48 @@ subscriber object
   Content-Type: application/json 
 * **Success Response:** 
 * **Code:** 200  
-  **Content:**  `{ message : "Success get subscriber" }` 
+  **Content:**  `{ message : "Success get newsletter" }` 
 	```
 	{
 	  page_number: integer 
 	  item_per_page: integer
 	  data: 
 	  [
-          {<subscriber_object>},
-          {<subscriber_object>},
-          {<subscriber_object>}
+          {<newsletter_object>},
+          {<newsletter_object>},
+          {<newsletter_object>}
 	  ]
 	}
 	```
 * **Error Response:**  
   * **Code:** 404  
-  **Content:** `{ message : "Subscriber not found" }`  
+  **Content:** `{ message : "newsletter not found" }`  
    * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
-### GET /v1/blogs/subscribers/{subscriber_id}
+### GET /v1/blogs/newsletters/{newsletter_id}
 
-  Return subscriber base on subcriber id.
+  Return newsletter base on subcriber id.
 
 * **URL Params**  
-  *Required:* `subscriber_id=[integer]`
+  *Required:* `newsletter_id=[integer]`
 * **Data Params**  
   None
 * **Headers**  
   Content-Type: application/json
 * **Success Response:** 
 * **Code:** 200  
-  **Content:**   `{ message : "Success get subscriber" }` 
-  `{ <subscriber_object> }` 
+  **Content:**   `{ message : "Success get newsletter" }` 
+  `{ <newsletter_object> }` 
 * **Error Response:**  
   * **Code:** 404  
-  **Content:** `{ message : "Subscriber not found" }` 
+  **Content:** `{ message : "newsletter not found" }` 
    * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
-### POST /blogs/v1/subscribers/
+### POST /blogs/v1/newsletters/
 ----
-  Create subscriber.
+  Create newsletter.
 * **URL Params**  
 	None
 * **Headers**  
@@ -700,17 +689,17 @@ subscriber object
 ```
 * **Success Response:**  
 * **Code:** 200  
-  **Content:** `{ message : "Success add subscriber" }`  
-   `{ <subscriber_object> }` 
+  **Content:** `{ message : "Success add newsletter" }`  
+   `{ <newsletter_object> }` 
 * **Error Response:**  
   * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
-### PUT /v1/blogs/subcribers/{subscriber_id}
+### PUT /v1/blogs/subcribers/{newsletter_id}
 ----
-  Delete subscriber base on id.
+  Delete newsletter base on id.
 * **URL Params**  
-  *Required:* `subscriber_id=[integer]`
+  *Required:* `newsletter_id=[integer]`
 * **Headers**  
   Content-Type: file/image
   Authorization:  `<Bearer Token (JWT)>`
@@ -722,20 +711,20 @@ subscriber object
 ```
 * **Success Response:**  
 * **Code:** 200  
-  **Content:**  `{ message : "Success delete subscriber" }`  
-  `{ <subscriber_object> }`  
+  **Content:**  `{ message : "Success delete newsletter" }`  
+  `{ <newsletter_object> }`  
 * **Error Response:**  
   * **Code:** 404  
-  **Content:** `{ message : "Subscriber not found" }`  
+  **Content:** `{ message : "newsletter not found" }`  
   OR  
   * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
-### DELETE /v1/blogs/subcribers/{subscriber_id}
+### DELETE /v1/blogs/subcribers/{newsletter_id}
 ----
-  Delete subscriber base on id.
+  Delete newsletter base on id.
 * **URL Params**  
-  *Required:* `subscriber_id=[integer]`
+  *Required:* `newsletter_id=[integer]`
 * **Headers**  
   Content-Type: file/image
   Authorization:  `<Bearer Token (JWT)>`
@@ -743,11 +732,11 @@ subscriber object
 	None
 * **Success Response:**  
 * **Code:** 200  
-  **Content:**  `{ message : "Success delete subscriber" }`  
-  `{ <subscriber_object> }`  
+  **Content:**  `{ message : "Success delete newsletter" }`  
+  `{ <newsletter_object> }`  
 * **Error Response:**  
   * **Code:** 404  
-  **Content:** `{ message : "Subscriber not found" }`  
+  **Content:** `{ message : "newsletter not found" }`  
   OR  
   * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
@@ -1495,7 +1484,7 @@ Delete page information base on id
   * **Code:** 401  
   **Content:** `{ message : "You are unauthorized to make this request." }`
 
-## 11. Contact
+## 11. Contact Form (Form Responses)
 
 contact object
 ```
